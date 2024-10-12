@@ -28,7 +28,7 @@ public class Utils {
                     break;
                 }
 
-                String agentAnswer = assistant.answer(userQuery);
+                String agentAnswer = assistant.chat(userQuery);
                 log.info("==================================================");
                 log.info("Assistant: " + agentAnswer);
             }

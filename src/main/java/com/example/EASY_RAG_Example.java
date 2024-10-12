@@ -10,6 +10,7 @@ import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.service.AiServices;
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
+import dev.langchain4j.data.message.SystemMessage;
 import shared.Assistant;
 
 import java.nio.file.Path;
@@ -26,10 +27,12 @@ public class EASY_RAG_Example {
         // First, let's load documents that we want to use for RAG
         List<Document> documents = loadDocuments(Paths.get("src/main/resources/docs"));
 
-
         // Second, let's create an assistant that will have access to our document
         Assistant assistant = AiServices.builder(Assistant.class)
-                .chatLanguageModel(OpenAiChatModel.withApiKey(System.getenv("OPENAI_API_KEY"))) // use OpenAI LLM
+                .chatLanguageModel(OpenAiChatModel.builder()
+                        .apiKey(System.getenv("OPENAI_API_KEY"))
+                        .temperature(0.2)
+                        .build()) // use OpenAI LLM
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
                 .contentRetriever(createContentRetriever(documents))
                 .build();
@@ -56,3 +59,4 @@ public class EASY_RAG_Example {
         return EmbeddingStoreContentRetriever.from(embeddingStore);
     }
 }
+
