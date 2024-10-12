@@ -10,7 +10,7 @@ public class _01_ModelParameters {
 
     public static void main(String[] args) {
 
-        // OpenAI parameters are exmplained here: https://platform.oppenai.com/docs/api-reference/chat/create
+        // OpenAI parameters are explained here: https://platform.openai.com/docs/api-reference/chat/create
 
         ChatLanguageModel model = OpenAiChatModel.builder()
                 .apiKey(System.getenv("OPENAI_API_KEY"))

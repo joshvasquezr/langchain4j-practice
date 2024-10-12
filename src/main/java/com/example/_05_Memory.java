@@ -21,7 +21,7 @@ public class _05_Memory {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         OpenAiStreamingChatModel model = OpenAiStreamingChatModel.builder()
                 .apiKey(System.getenv("OPENAI_API_KEY"))
-                .modelName("GPT_4_O_MINI")
+                .modelName(GPT_4_O_MINI)
                 .build();
 
         ChatMemory chatMemory = TokenWindowChatMemory.withMaxTokens(1000, new OpenAiTokenizer());
@@ -70,6 +70,9 @@ public class _05_Memory {
         System.out.println("\n\n[User]: " + userMessage2.text());
         System.out.println("[LLM]: ");
 
+        CompletableFuture<AiMessage> futureAiMessage2 = new CompletableFuture<>();
+
         model.generate(chatMemory.messages(), handler);
+        chatMemory.add(futureAiMessage2.get());
     }
 }
